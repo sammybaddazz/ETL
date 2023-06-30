@@ -1,0 +1,32 @@
+import csv
+
+def delete_values_beyond_headers(csv_file):
+    # Read the CSV file
+    with open(csv_file, 'r') as file:
+        reader = csv.reader(file)
+        headers = next(reader)  # Read the header row
+        
+        # Determine the maximum number of columns based on the header length
+        max_columns = len(headers)
+        
+        # Create a list to store updated rows
+        updated_rows = []
+        
+        # Iterate through each row
+        for row in reader:
+            # Remove values beyond the available headers
+            updated_row = row[:max_columns]
+            updated_rows.append(updated_row)
+        
+    # Overwrite the CSV file with updated rows
+    with open(csv_file, 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(headers)  # Write the header row
+        writer.writerows(updated_rows)
+        
+    print("Values beyond the available headers have been removed from the CSV file.")
+
+# Example usage
+csv_file = r'C:\Users\samue\OneDrive\Desktop\Supplier Inventory\NPW\Inventory.csv'
+
+delete_values_beyond_headers(csv_file)
